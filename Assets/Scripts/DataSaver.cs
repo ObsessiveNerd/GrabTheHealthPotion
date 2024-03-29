@@ -8,6 +8,8 @@ public struct PersistentData
     public int LastRun;
     public int LifetimePotions;
     public int Highscore;
+
+    public bool Muted;
 }
 
 public class DataSaver : MonoBehaviour
@@ -45,8 +47,15 @@ public class DataSaver : MonoBehaviour
             {
                 LifetimePotions = 0,
                 Highscore = 0,
-                LastRun = 0
+                LastRun = 0,
+                Muted = false
             };
+    }
+
+    public void SetMuted(bool muted)
+    {
+        m_Data.Muted = muted;
+        File.WriteAllText(m_PersistentDataPath, JsonUtility.ToJson(m_Data));
     }
 
     public void EndGame(int finalScore)

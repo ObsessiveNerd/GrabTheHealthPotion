@@ -16,6 +16,9 @@ public class GameManager : MonoBehaviour
     public GameObject Text;
     public Transform Canvas;
 
+    public AudioSource GlassBreak;
+    public AudioSource DrinkPotion;
+
     List<GameObject> m_Hearts = new List<GameObject>();
 
     private void Start()
@@ -29,7 +32,7 @@ public class GameManager : MonoBehaviour
     public void AddToScore(Vector2 position)
     {
         Score++;
-        ScoreUI.text = $"Total Potions: {Score}";
+        ScoreUI.text = $"Potions: {Score}";
 
         int randomValue = Random.Range(0, 100);
         if(randomValue < 50)
@@ -37,6 +40,7 @@ public class GameManager : MonoBehaviour
             var instance = Instantiate(Text, Canvas);
             instance.transform.position = Camera.main.WorldToScreenPoint(position);
             instance.GetComponent<TextMeshProUGUI>().text = BlurbObject.GetBlurb();
+            DrinkPotion.Play();
         }
         Debug.Log($"Score: {Score}");
     }
@@ -48,6 +52,8 @@ public class GameManager : MonoBehaviour
         m_Hearts[Health].GetComponent<ObjectShaker>().Shake();
         renderer.color = Color.grey;
         Health--;
+        GlassBreak.Play();
+
         if(Health <= 0)
         {
             FindObjectOfType<DataSaver>()?.EndGame(Score);

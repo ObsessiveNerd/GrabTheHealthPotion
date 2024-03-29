@@ -32,13 +32,16 @@ public class Spawner : MonoBehaviour
             GameObject instance = null;
 
             if (randomValue < 10)
-                instance = Instantiate(Poisons[Random.Range(0, Poisons.Count)], randomPosition, randomRotation);
+                instance = Instantiate(Poisons[Random.Range(0, Poisons.Count)], randomPosition, Quaternion.identity);
             else
-                instance = Instantiate(HealthPotions[Random.Range(0, HealthPotions.Count)], randomPosition, randomRotation);
+                instance = Instantiate(HealthPotions[Random.Range(0, HealthPotions.Count)], randomPosition, Quaternion.identity);
+
+            instance.GetComponentInChildren<SpriteRenderer>().transform.rotation = randomRotation;
+                //.Find("Image").rotation = randomRotation;
 
             //instance.GetComponent<Rigidbody2D>().AddForce(new Vector2(Random.Range(-1f, 1), Random.Range(0f, 1f)) * Random.Range(1, 10), ForceMode2D.Impulse);
             m_TimeSinceLastSpawn = 0f;
-            m_TimeUntilNextSpawn = Random.Range(0.2f, 0.7f);
+            m_TimeUntilNextSpawn = Random.Range(0.1f, 0.6f);
         }
         else
             m_TimeSinceLastSpawn += Time.deltaTime;

@@ -14,13 +14,23 @@ public class ScreenManager : MonoBehaviour
     void Start()
     {
         PersistentData data = FindObjectOfType<DataSaver>().GetData();
-        Potions.text = $"Potions: {data.LastRun}";
+        Potions.text = $"Last Run: {data.LastRun}";
         Highscore.text = $"Best Run: {data.Highscore}";
-        Lifetime.text = $"Lifetime: {data.LifetimePotions}";
+        Lifetime.text = $"Total Hoard: {data.LifetimePotions}";
+    }
+
+    public void LoadMainScreen()
+    {
+        SceneManager.LoadScene("Scene");
     }
 
     public void LoadGame()
     {
         SceneManager.LoadScene("Game");
+    }
+
+    public void LoadLeaderboards()
+    {
+        SceneManager.LoadScene("Leaderboards");
     }
 }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class OnTouchDown : MonoBehaviour
 {
-    void Update()
+    void FixedUpdate()
     {
         // Code for OnMouseDown in the iPhone. Unquote to test.
         RaycastHit hit = new RaycastHit();
