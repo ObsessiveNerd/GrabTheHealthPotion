@@ -12,6 +12,10 @@ public class MuteController : MonoBehaviour
     private void Start()
     {
         m_DataSaver = FindObjectOfType<DataSaver>();
+
+        if (m_DataSaver == null)
+            return;
+
         m_isMuted = m_DataSaver.GetData().Muted;
         SetupVolume();
     }

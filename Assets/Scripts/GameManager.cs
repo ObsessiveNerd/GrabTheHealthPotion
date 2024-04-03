@@ -15,9 +15,12 @@ public class GameManager : MonoBehaviour
     public Blurbs BlurbObject;
     public GameObject Text;
     public Transform Canvas;
+    public GameObject BottomSpawner;
 
     public AudioSource GlassBreak;
     public AudioSource DrinkPotion;
+
+    public bool GodMode = false;
 
     List<GameObject> m_Hearts = new List<GameObject>();
 
@@ -27,6 +30,7 @@ public class GameManager : MonoBehaviour
             m_Hearts.Add(heart.gameObject);
 
         Health = m_Hearts.Count - 1;
+        StartCoroutine(TurnOnBottomSpawner());
     }
 
     public void AddToScore(Vector2 position)
@@ -51,7 +55,10 @@ public class GameManager : MonoBehaviour
         var renderer = m_Hearts[Health].GetComponent<Image>();
         m_Hearts[Health].GetComponent<ObjectShaker>().Shake();
         renderer.color = Color.grey;
-        Health--;
+
+        if(!GodMode)
+            Health--;
+        
         GlassBreak.Play();
 
         if(Health <= 0)
@@ -59,5 +66,20 @@ public class GameManager : MonoBehaviour
             FindObjectOfType<DataSaver>()?.EndGame(Score);
             SceneManager.LoadScene("Screen");
         }
+    }
+
+    IEnumerator TurnOnBottomSpawner()
+    {
+        yield return new WaitForSeconds(15f);
+        BottomSpawner.SetActive(true);
+
+        foreach (var spawner in FindObjectsOfType<Spawner>())
+            spawner.IncreaseSpawnTime(0.2f);
+
+        //hard mode
+        yield return new WaitForSeconds(30f);
+        foreach (var spawner in FindObjectsOfType<Spawner>())
+            spawner.IncreaseSpawnTime(-0.1f);
+
     }
 }
