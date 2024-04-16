@@ -18,9 +18,17 @@ public class DataSaver : MonoBehaviour
     PersistentData m_Data;
     bool m_Initialized = false;
 
+    static DataSaver instance;
+
     private void Start()
     {
-        DontDestroyOnLoad(gameObject);
+        if(instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+            Destroy(gameObject);
     }
 
     public PersistentData GetData()

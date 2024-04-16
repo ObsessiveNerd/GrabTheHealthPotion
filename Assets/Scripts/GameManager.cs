@@ -64,6 +64,7 @@ public class GameManager : MonoBehaviour
         if(Health <= 0)
         {
             FindObjectOfType<DataSaver>()?.EndGame(Score);
+            FindObjectOfType<LeaderboardManager>().AddScore(Score);
             SceneManager.LoadScene("Screen");
         }
     }
