@@ -31,7 +31,7 @@ public class UnityAdsManager : MonoBehaviour, IUnityAdsInitializationListener, I
         //{
         //    DebugLog(Application.platform + " supported by Advertisement");
         //}
-        Advertisement.Initialize(GAME_ID, true, this);
+        Advertisement.Initialize(GAME_ID, false, this);
         ToggleBanner();
     }
 
